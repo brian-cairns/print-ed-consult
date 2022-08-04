@@ -1,5 +1,7 @@
+let id = ''
 const params = new URLSearchParams(window.location.search)
-for (const [key, value] of params) { let id = value; }
+for (const [key, value] of params) { id = value; }
+console.log(params.id)
 
 //Show animation 
 document.getElementById('pageTitle').style.display = "none";
