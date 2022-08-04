@@ -26,7 +26,7 @@ function createSearchQuery(form, id) {
         headers: header
     })
         .then(response => response.json())
-        .then(data => populatePage(data))
+        .then(data => populatePage(data[0]))
         .catch(console.error)
 }
 
