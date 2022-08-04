@@ -7,24 +7,26 @@ document.getElementById('formBody').style.display = "none";
 document.getElementById('returnSection').style.display = "none";
 
 //fetch data
-const url = 'https://pffm.azurewebsites.net/getForms'
-const query = {
-    form: 'educationalConsultation',
-    itemId: id 
-}
-const header = {
-    'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": "*"
-}
+createSearchQuery('educationalConsultation', id)
 
-fetch(url, {
-    method: "GET",
-    headers: header,
-    body: JSON.stringify(query)
-})
-    .then(response => response.json())
-    .then(data => populatePage(data))
-    .catch(console.error)
+function createSearchQuery(form, id) {
+     console.log(id, form)
+
+    //fetch data
+    const url = `https://pffm.azurewebsites.net/getForms/?form=${form}&id=${id}`
+    const header = {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    fetch(url, {
+        method: "GET",
+        headers: header
+    })
+        .then(response => response.json())
+        .then(data => populatePage(data))
+        .catch(console.error)
+}
 
 async function populatePage(data) {
     document.getElementById('staffEmail').innerHTML = data.employeeEmail;
