@@ -1,7 +1,7 @@
 let id = ''
 const params = new URLSearchParams(window.location.search)
 for (const [key, value] of params) { id = value; }
-console.log(params.id)
+
 
 //Show animation 
 document.getElementById('pageTitle').style.display = "none";
@@ -15,7 +15,8 @@ function createSearchQuery(form, id) {
      console.log(id, form)
 
     //fetch data
-    const url = `https://pffm.azurewebsites.net/getForms/?form=${form}&id=${id}`
+    const url = `https://pffm.azurewebsites.net/getForms/?form=${form}&key=${id}`
+    console.log(url)
     const header = {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/x-www-form-urlencoded"
@@ -26,11 +27,13 @@ function createSearchQuery(form, id) {
         headers: header
     })
         .then(response => response.json())
-        .then(data => populatePage(data[0]))
+        .then(data1 => populatePage(data1))
         .catch(console.error)
 }
 
-async function populatePage(data) {
+async function populatePage(data1) {
+		let data = data1[0]
+    console.log(data)
     document.getElementById('staffEmail').innerHTML = data.employeeEmail;
     document.getElementById('clientName').innerHTML = data.clientName;
     document.getElementById('members').innerHTML = data.membersPresent;
@@ -48,10 +51,10 @@ async function populatePage(data) {
     
     //show arrays
     for (let i = 1; i < 4; i++) {
-        document.getElementById(`concern${i}`).innerHTML = data.parentalConcerns[i];
-        document.getElementById(`resolution${i}`).innerHTML = data.resolution[i];
-        document.getElementById(`nextSteps${i}`).innerHTML = data.nextSteps[i];
-        if(!data.parentalConcerns[i+1]) {i=4}
+        document.getElementById(`concern${i}`).innerHTML = concern[i];
+        document.getElementById(`resolution${i}`).innerHTML = resolution[i];
+        document.getElementById(`nextSteps${i}`).innerHTML = nextSteps[i];
+        if(!concern[i+1]) {i=4}
     }
     showPage()
 }
@@ -60,7 +63,7 @@ function showPage() {
     document.getElementById('pageTitle').style.display = "block";
     document.getElementById('formBody').style.display = "block";
     document.getElementById('returnSection').style.display = "block";
-    document.getElementById('loadingAnimationSection').style.display = "none";
+    document.getElementById('loadingAnimation').style.display = "none";
 }
 
 let printToPDF = document.getElementById('printToPDF')
