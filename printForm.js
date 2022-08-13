@@ -51,10 +51,10 @@ async function populatePage(data1) {
     
     //show arrays
     for (let i = 1; i < 4; i++) {
-        document.getElementById(`concern${i}`).innerHTML = concern[i];
-        document.getElementById(`resolution${i}`).innerHTML = resolution[i];
-        document.getElementById(`nextSteps${i}`).innerHTML = nextSteps[i];
-        if(!concern[i+1]) {i=4}
+        document.getElementById(`concern${i}`).innerHTML = concern[i-1];
+        document.getElementById(`resolution${i}`).innerHTML = resolution[i-1];
+        document.getElementById(`nextSteps${i}`).innerHTML = nextSteps[i-1];
+        if(!concern[i]) {i=4}
     }
     showPage()
 }
